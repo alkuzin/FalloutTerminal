@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "terminal.h"
 
 int main(void)
@@ -12,13 +10,17 @@ int main(void)
     option_list[1] = (option_t){.title="Incident Reports", .content="-", .content_type="text"};
     option_list[2] = (option_t){.title="Personal Notes", .content="-", .content_type="directory"};
 
-    set_main_title("==== Institute Central Network ====\n"
-                   "Advanced Systems Terminal 1A\n\n");
+    // set_main_title("==== Institute Central Network ====\n"
+    //                "Advanced Systems Terminal 1A\n\n");
 
-    // ch = getch();
+    // // ch = getch();
 
-    slow_print(main_title, DEFAULT_DELAY);
-    print_options(option_list, size);
+    // slow_print(main_title, DEFAULT_DELAY);
+    // print_options(option_list, size, -1);
+
+    puts("BEGIN");
+    getch();
+    select_option(option_list, size);
 
     getchar();
     getchar();

@@ -2,6 +2,7 @@
 #define TERMINAL_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <termios.h>
 #include <unistd.h>
@@ -17,15 +18,16 @@ typedef struct
     void* content;
 }option_t;
 
+void print_options(const option_t* options_list, const int size, const int selected);
 
-void print_options(option_t* options_list, int size);
-
-void set_main_title(char* title);
+void set_main_title(const char* title);
 
 void set_option_content(option_t* option, void* content);
 
-void slow_print(char* text, int delay);
+void slow_print(const char* text, int delay);
 
 int getch(void);
+
+void select_option(const option_t* options_list, const int size);
 
 #endif
