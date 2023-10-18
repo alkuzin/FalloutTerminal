@@ -20,32 +20,48 @@
 
 #include "ui.h"
 
-extern char main_title[128];
-extern char access_logs_text[512];
-
+#define TITLE_SIZE 128
+#define OPTION_SIZE 128
+#define CONTENT_SIZE 512
 #define DEFAULT_DELAY 50
+
+#define TEXT 0
+#define DIRECTORY 1
+#define ERROR 2
+
+extern char title[TITLE_SIZE];
 
 typedef struct
 {
     char title[32];
-    char content_type[16];
+    int content_type;
     void* content;
 }option_t;
 
-void print_options(const option_t* options_list, const int size, const int selected);
-
-void set_main_title(const char* title);
-
-void set_option_content(option_t* option, void* content);
-
-void print_content(const option_t* option_list, const int size, const int selected);
-
-void slow_print(const char* text, int delay);
-
+// listen keys
 int getch(void);
 
-void select_option(const option_t* options_list, const int size);
+void hide_cursor(void);
 
-void print_main_title(void);
+void show_cursor(void);
+
+void set_title(const char* title);
+
+// set option content (text, list of options or error)
+void set_option_content(option_t* option, void* content);
+
+// set option content type (text, list of options or error)
+void set_option_content_type(option_t* option, int content_type);
+
+void print_options(const option_t* options_list, const int size);
+
+// interactive options selection
+void select_option(option_t* options_list, const int size);
+
+// print option's content
+void print_content(option_t* option_list, const int size);
+
+// print text with time delay
+void slow_print(const char* text, int delay);
 
 #endif
