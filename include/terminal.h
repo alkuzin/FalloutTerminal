@@ -18,18 +18,12 @@
 #include <termios.h>
 #include <unistd.h>
 
+#include "ui.h"
+
 extern char main_title[128];
 extern char access_logs_text[512];
-#define DEFAULT_DELAY 50
 
-extern char* main_color;
-#define RED "\033[31m"
-#define BLACK "\033[30m"
-#define GREEN "\033[32m"
-#define CYAN "\033[96m"
-#define WHITE "\033[97m"
-#define REVERSE "\033[7m"
-#define RESET "\033[0m"
+#define DEFAULT_DELAY 50
 
 typedef struct
 {

@@ -3,9 +3,9 @@ CFLAGS = -Wno-implicit-function-declaration
 
 TARGET_PATH=src/
 
-final: main.o terminal.o
+final: main.o terminal.o ui.o
 	@echo "(*) Linking and producting the final application"
-	$(CC) $(CFLAGS) terminal.o main.o -o terminal
+	$(CC) $(CFLAGS) main.o terminal.o ui.o -o terminal
 	chmod +x terminal
 	@echo "[+] Complete successfully"
 
@@ -17,6 +17,10 @@ terminal.o: $(TARGET_PATH)terminal.c
 	@echo "(*) Compiling terminal.c"
 	$(CC) $(CFLAGS) -c $(TARGET_PATH)terminal.c
 
+ui.o: $(TARGET_PATH)ui.c
+	@echo "(*) Compiling ui.c"
+	$(CC) $(CFLAGS) -c $(TARGET_PATH)ui.c
+
 clean:
 	@echo "(*) Removing extra files"
-	rm main.o terminal.o
+	rm main.o terminal.o ui.o
