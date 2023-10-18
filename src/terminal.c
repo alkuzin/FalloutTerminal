@@ -11,83 +11,9 @@
 // =============================================================================
 #include "../include/terminal.h"
 
-char* main_color = CYAN;
-char main_title[128];
-char access_logs_text[512] = 
-"Access: Local. Login: Li.M\n"
-"Notes: Review of Phase Three project status\n\n"
-"Access: Local. Login: Li.M\n"
-"Notes: update diagnostic tools for child synth project\n\n"
-"Access: Remote. Login: DIRECTOR\n"
-"Notes: --REDACTED--\n\n"
-"Access: Local. Login: Li.M\n"
-"Notes: Review of all BioScience projects\n\n\n";
-
-static char data_corrupted[512] = 
-"--ERROR DATA CORRUPTED--\n\n"
-"r9cjditxchfxirksfjiOJ)(*&^IOFBUi_)**()&...\n\n"
-"0000200f  7325 735b 2573 5d25 3634 7309 001b 5b30\n"
-"0000201f  6d00 2573 5b25 735d 2573 0025 7325 7325\n" 
-"0000202f  730a 0074 6578 7400 6469 7265 6374 6f72\n"
-"0000203f  7900 2573 0063 6c65 6172 0025 7325 7325\n";
-
-void print_options(const option_t* options_list, int size, const int selected) 
-{
-    char buffer[128];
-    print_main_title();
-    for (int i = 0; i < size; i++)
-    {
-        if (i == selected)
-            snprintf(buffer, sizeof(buffer), "%s%s[%s]%64s\t", REVERSE, main_color, options_list[i].title, RESET);
-        else
-            snprintf(buffer, sizeof(buffer), "%s[%s]%s", main_color, options_list[i].title, RESET);
-        puts(buffer);
-    }
-}
-
-void set_main_title(const char* title)
-{
-    strncpy(main_title, title, 128);
-}
-
-void print_main_title(void)
-{
-    printf("%s%s%s\n", main_color, main_title, RESET);
-}
-
-void set_option_content(option_t* option, void* content)
-{
-    if (strncmp(option->content_type, "text", 4) == 0)
-    {
-        option->content = (char*) content;
-    }
-    else if (strncmp(option->content_type, "directory", 10) == 0)
-    {
-        option->content = (option_t*) content;
-    }
-}
-
-void slow_print(const char* text, int delay)
-{
-    int i;
-    int ch;
-    i = -1;
-    ch = getch();
-    printf("%s", main_color);
-    while (text[++i] != '\0')
-    {   
-        putchar(text[i]);
-        fflush(stdout);
-        usleep(delay * 500);
-        if (ch == '\t')
-        {
-            system("clear");
-            print_main_title();
-            return;
-        }
-    }
-    printf("%s", RESET);
-}
+char title[TITLE_SIZE];
+static char option[OPTION_SIZE];
+static int selected = -1;
 
 int getch(void) 
 {
@@ -102,56 +28,64 @@ int getch(void)
     return ch;
 }
 
-void print_content(const option_t* option_list, const int size, const int selected)
+void hide_cursor(void)
 {
-    int ch;
-    system("clear");
-    print_main_title();
-    if (strncmp(option_list[selected].content_type, "text", 4) == 0)
+    printf("%s", "\e[?25l"); 
+}
+
+void show_cursor(void)
+{
+    printf("%s", "\e[?25h"); 
+}
+
+void set_title(const char* new_title)
+{
+    strncpy(title, new_title, TITLE_SIZE);
+}
+
+void set_option_content(option_t* option, void* content)
+{
+    if (option->content_type == TEXT || option->content_type == ERROR)
+        option->content = (char*) content;
+    else if (option->content_type == DIRECTORY)
+        option->content = (option_t*) content;
+}
+
+void set_option_content_type(option_t* option, int content_type)
+{
+    option->content_type = content_type;
+}
+
+void print_options(const option_t* options_list, int size) 
+{   
+    puts_col(title);
+    for (int i = 0; i < size; i++)
     {
-        printf("%s%s%s\n", main_color, (char*)option_list[selected].content, RESET);
-    }
-    else if (strncmp(option_list[selected].content_type, "directory", 10) == 0)
-    {
-        if ((option_t*)option_list[selected].content == NULL)
-        {
-            printf("%s%-512s%s\n", RED, data_corrupted, RESET);
-        }
+        snprintf(option, OPTION_SIZE, "[%s]%64s\t", options_list[i].title, " ");
+        if (i == selected)
+            puts_rev_col(option);
         else
-        {
-            int size = 0;
-            while ((option_t*)option_list[selected].content)
-                size++;
-            print_options((option_t*)option_list[selected].content, size, -1);
-        }
-    }
-    while (ch = getch())
-    {
-        if (ch == '\t')
-        {
-            select_option(option_list, size);
-            break;
-        }
+            puts_col(option);
     }
 }
 
-void select_option(const option_t* options_list, const int size)
+void select_option(option_t* options_list, const int size)
 {
     int ch;
-    int selected;
-    selected = 0;
-
     system("clear");
 
-    print_options(options_list, size, selected);
+    print_options(options_list, size);
     while (ch = getch())
     {
         if (ch == 'q')
+        {
+            show_cursor();
             exit(EXIT_SUCCESS);
+        }
 
         if (ch == '\n')
         {
-            print_content(options_list, size, selected);
+            print_content(options_list, size);
             break;
         }
         
@@ -165,7 +99,7 @@ void select_option(const option_t* options_list, const int size)
                 selected--;
                 if (selected < 0)
                     selected = size - 1;
-                print_options(options_list, size, selected);
+                print_options(options_list, size);
                 break;
             
             case 'B':
@@ -173,11 +107,75 @@ void select_option(const option_t* options_list, const int size)
                 selected++;
                 if (selected >= size)
                     selected = 0;
-                print_options(options_list, size, selected);
+                print_options(options_list, size);
                 break;
             default:
                 break;
             }
         }
     }
+}
+
+void print_content(option_t* option_list, const int size)
+{
+    int ch;
+    system("clear");
+    puts_col(title);
+
+    if ((option_t*)option_list[selected].content == NULL)
+    {
+        set_option_content(&option_list[selected], "--ERROR MISSING DATA--");
+        set_option_content_type(&option_list[selected], ERROR);
+    }
+
+    switch (option_list[selected].content_type)
+    {
+    case TEXT:
+        puts_col((char*)option_list[selected].content);
+        break;
+
+    case DIRECTORY:
+        int size = 0;
+        while ((option_t*)option_list[selected].content)
+            size++;
+        print_options((option_t*)option_list[selected].content, size);
+        break;
+
+    case ERROR:
+        puts_err_col((char*)option_list[selected].content);
+        break;
+    
+    default:
+        puts_err_col("--UNKNOWN CONTENT TYPE--");
+        break;
+    }
+    while (ch = getch())
+    {
+        if (ch == '\t')
+        {
+            select_option(option_list, size);
+            break;
+        }
+    }
+}
+
+void slow_print(const char* text, int delay)
+{
+    int i = -1;
+    int ch = getch();
+
+    printf("%s", primary_color);
+    while (text[++i] != '\0')
+    {   
+        putchar(text[i]);
+        fflush(stdout);
+        usleep(delay * 500);
+        if (ch == '\t')
+        {
+            system("clear");
+            puts_col(title);
+            return;
+        }
+    }
+    printf("%s", COLOR_RESET);
 }
