@@ -1,3 +1,14 @@
+// =============================================================================
+//
+//    src/main.c	
+//
+//    By: alkuzin <---@gmail.com>                                         	
+//
+//    Updated: 17/10/2023 23:06:24                                             	
+//
+//                       Copyright "FalloutTerminal" (c), 2023.	
+//
+// =============================================================================
 #include "../include/terminal.h"
 
 int main(void)
@@ -13,6 +24,7 @@ int main(void)
                    "Advanced Systems Terminal 1A\n\n");
                    
     printf("%s... Print any button to start ...%s\n\n", main_color, RESET);
+
     slow_print(main_title, DEFAULT_DELAY);
     select_option(option_list, size);
     
