@@ -1,7 +1,7 @@
-# FalloutTerminal
-
+# Fallout Terminal
+Library for creating custom Fallout Terminal written in C.
 ## Project Tree:
-```console
+```
 .
 ├── include
 │   ├── terminal.h
@@ -12,4 +12,18 @@
     ├── main.c
     ├── terminal.c
     └── ui.c
+```
+## Installation
+First clone this repository:
+```console
+git clone https://github.com/alkuzin/FalloutTerminal.git
+```
+Then:
+```console
+make
+make clean
+```
+To run terminal run this command:
+```
+clear && ./terminal
 ```
