@@ -1,4 +1,6 @@
 # Fallout Terminal
+<img src="fallout-terminal.gif">
+
 Library for creating custom Fallout Terminal written in C.
 ## Project Tree:
 ```
@@ -23,6 +25,6 @@ Then:
 make && make clean
 ```
 To run terminal run this command:
-```
+```console
 clear && ./terminal
 ```
