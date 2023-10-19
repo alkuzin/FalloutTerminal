@@ -2,9 +2,9 @@
 //
 //    include/terminal.h	
 //
-//    By: alkuzin <---@gmail.com>                                         	
+//    By: alkuzin < >                                                     	
 //
-//    Updated: 17/10/2023 22:38:02                                             	
+//    Updated: 19/10/2023 18:28:10                                             	
 //
 //                       Copyright "FalloutTerminal" (c), 2023.	
 //
@@ -59,7 +59,7 @@ void print_options(const option_t* options_list, const int size);
 void select_option(option_t* options_list, const int size);
 
 // print option's content
-void print_content(option_t* option_list, const int size);
+void print_content(option_t* options_list, int size);
 
 // print text with time delay
 void slow_print(const char* text, int delay);
