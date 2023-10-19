@@ -2,9 +2,9 @@
 //
 //    src/terminal.c	
 //
-//    By: alkuzin <---@gmail.com>                                         	
+//    By: alkuzin < >                                                     	
 //
-//    Updated: 17/10/2023 23:03:25                                             	
+//    Updated: 19/10/2023 19:57:12                                             	
 //
 //                       Copyright "FalloutTerminal" (c), 2023.	
 //
@@ -13,7 +13,8 @@
 
 char title[TITLE_SIZE];
 static char option[OPTION_SIZE];
-static int selected = -1;
+static int selected = 0;
+static int is_main_window = 0;
 
 int getch(void) 
 {
@@ -88,6 +89,15 @@ void select_option(option_t* options_list, const int size)
             print_content(options_list, size);
             break;
         }
+
+        if (ch == '\t')
+        {
+            if (is_main_window)
+            {
+                is_main_window = 0;
+                return;
+            }
+        }
         
         if (ch == '\033')
         {
@@ -119,10 +129,11 @@ void select_option(option_t* options_list, const int size)
 void print_content(option_t* option_list, const int size)
 {
     int ch;
+    is_main_window = 1;
     system("clear");
     puts_col(title);
 
-    if ((option_t*)option_list[selected].content == NULL)
+    if (option_list[selected].content == NULL)
     {
         set_option_content(&option_list[selected], "--ERROR MISSING DATA--");
         set_option_content_type(&option_list[selected], ERROR);
@@ -135,10 +146,11 @@ void print_content(option_t* option_list, const int size)
         break;
 
     case DIRECTORY:
-        int size = 0;
-        while ((option_t*)option_list[selected].content)
-            size++;
-        print_options((option_t*)option_list[selected].content, size);
+        system("clear");
+        int temp_selected = selected;
+        selected = 0;
+        select_option((option_t*)option_list[temp_selected].content, 2);
+        selected = 0;
         break;
 
     case ERROR:
