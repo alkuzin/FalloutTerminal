@@ -20,8 +20,7 @@ git clone https://github.com/alkuzin/FalloutTerminal.git
 ```
 Then:
 ```console
-make
-make clean
+make && make clean
 ```
 To run terminal run this command:
 ```
