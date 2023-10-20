@@ -1,7 +1,7 @@
 # Fallout Terminal
 <img src="fallout-terminal.gif">
 
-Library for creating custom Fallout Terminal written in C.
+Fallout Terminal written in C.
 ## Project Tree:
 ```
 .
