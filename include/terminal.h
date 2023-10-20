@@ -4,7 +4,7 @@
 //
 //    By: alkuzin < >                                                     	
 //
-//    Updated: 19/10/2023 18:28:10                                             	
+//    Updated: 20/10/2023 17:15:44                                             	
 //
 //                       Copyright "FalloutTerminal" (c), 2023.	
 //
@@ -46,6 +46,8 @@ void hide_cursor(void);
 void show_cursor(void);
 
 void set_title(const char* title);
+
+void set_parent_window(option_t* options_list);
 
 // set option content (text, list of options or error)
 void set_option_content(option_t* option, void* content);
