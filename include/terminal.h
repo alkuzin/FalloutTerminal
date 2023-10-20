@@ -29,8 +29,6 @@
 #define DIRECTORY 1
 #define ERROR 2
 
-extern char title[TITLE_SIZE];
-
 typedef struct
 {
     char title[32];
