@@ -4,7 +4,7 @@
 //
 //    By: alkuzin < >                                                     	
 //
-//    Updated: 19/10/2023 19:54:30                                             	
+//    Updated: 20/10/2023 17:16:18                                             	
 //
 //                       Copyright "FalloutTerminal" (c), 2023.	
 //
@@ -93,8 +93,10 @@ int main(void)
 
     // initializing terminal
     hide_cursor();
-    puts_col("..Initializing terminal..\nPress any key to continue.\n\n");
+    puts_col("..Initializing terminal..\nPress any key to continue.\n");
+    getchar();
     slow_print(title, DEFAULT_DELAY);
+    set_parent_window(option_list);
     select_option(option_list, size);
     return 0;
 }
