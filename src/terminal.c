@@ -4,7 +4,7 @@
 //
 //    By: alkuzin < >                                                     	
 //
-//    Updated: 19/10/2023 19:57:12                                             	
+//    Updated: 20/10/2023 17:17:43                                             	
 //
 //                       Copyright "FalloutTerminal" (c), 2023.	
 //
@@ -13,8 +13,8 @@
 
 char title[TITLE_SIZE];
 static char option[OPTION_SIZE];
-static int selected = 0;
-static int is_main_window = 0;
+static void* parent_window = NULL;
+static int selected = 0; // selected option index
 
 int getch(void) 
 {
@@ -42,6 +42,11 @@ void show_cursor(void)
 void set_title(const char* new_title)
 {
     strncpy(title, new_title, TITLE_SIZE);
+}
+
+void set_parent_window(option_t* options_list)
+{
+    parent_window = options_list;
 }
 
 void set_option_content(option_t* option, void* content)
@@ -92,13 +97,9 @@ void select_option(option_t* options_list, const int size)
 
         if (ch == '\t')
         {
-            if (is_main_window)
-            {
-                is_main_window = 0;
+            if (parent_window != (void*)options_list)
                 return;
-            }
         }
-        
         if (ch == '\033')
         {
             getch();   
@@ -129,7 +130,6 @@ void select_option(option_t* options_list, const int size)
 void print_content(option_t* option_list, const int size)
 {
     int ch;
-    is_main_window = 1;
     system("clear");
     puts_col(title);
 
@@ -174,20 +174,12 @@ void print_content(option_t* option_list, const int size)
 void slow_print(const char* text, int delay)
 {
     int i = -1;
-    int ch = getch();
-
     printf("%s", primary_color);
     while (text[++i] != '\0')
     {   
         putchar(text[i]);
         fflush(stdout);
         usleep(delay * 500);
-        if (ch == '\t')
-        {
-            system("clear");
-            puts_col(title);
-            return;
-        }
     }
     printf("%s", COLOR_RESET);
 }
