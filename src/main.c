@@ -10,6 +10,7 @@
 //
 // =============================================================================
 #include "../include/terminal.h"
+#include "../include/login.h"
 
 int main(void)
 {
@@ -21,6 +22,27 @@ int main(void)
     set_primary_color(COLOR_WHITE);
     set_error_color(COLOR_RED);
     set_title(main_title);
+
+    // initialize login process
+    if (login())
+    {
+        hide_cursor();
+        system("clear");
+
+        puts_col(login_title);
+        slow_print("\nLOGIN AS ADMINISTRATOR\n"
+        "PASSWORD: * * * * *\n\nSTATUS: COMPLETE\n\n\n", DEFAULT_DELAY);
+        puts_blink_col("[press <enter> to continue]");
+
+        getchar();
+    }
+    else
+    {
+        system("clear");
+        lock_out_terminal();
+        printf("%s", COLOR_RESET);
+    }
+    system("clear");
 
     // set options
     int size = 3;
@@ -92,10 +114,7 @@ int main(void)
     };
 
     // initializing terminal
-    hide_cursor();
-    puts_col("..Initializing terminal..\nPress any key to continue.\n");
-    getchar();
-    slow_print(title, DEFAULT_DELAY);
+    slow_print(main_title, DEFAULT_DELAY);
     set_parent_window(option_list);
     select_option(option_list, size);
     return 0;
