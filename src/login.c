@@ -1,3 +1,14 @@
+// =============================================================================
+//
+//    src/login.c	
+//
+//    By: alkuzin < >                                                     	
+//
+//    Updated: 20/10/2023 21:29:07                                             	
+//
+//                       Copyright "FalloutTerminal" (c), 2023.	
+//
+// =============================================================================
 #include "../include/login.h"
 
 static int attempts = MAX_ATTEMPTS;
@@ -23,7 +34,7 @@ int login(void)
         }
         putchar('\n');
         putchar('\n');
-        
+
         printf("%-64s\n\n", failed_attempt);
         for(int i = 0; i < 16; i++)
         {
