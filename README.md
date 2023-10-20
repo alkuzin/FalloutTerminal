@@ -1,19 +1,36 @@
 # Fallout Terminal
-<img src="fallout-terminal.gif">
 
 Fallout Terminal written in C.
+
+> [!WARNING]
+> Project is still under development. Some bugs can occur.
+
+## Failed login
+<img src="failed-login.gif">
+
+## Success login
+<img src="success-login.gif">
+<br>
+<img src="fallout-terminal.gif">
+
+
 ## Project Tree:
 ```
 .
+├── failed-login.gif
+├── fallout-terminal.gif
 ├── include
+│   ├── login.h
 │   ├── terminal.h
 │   └── ui.h
+├── LICENSE
 ├── makefile
 ├── README.md
-└── src
-    ├── main.c
-    ├── terminal.c
-    └── ui.c
+├── src
+│   ├── login.c
+│   ├── main.c
+│   ├── terminal.c
+│   └── ui.c
 ```
 ## Installation
 First clone this repository:
