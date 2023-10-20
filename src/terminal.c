@@ -11,7 +11,7 @@
 // =============================================================================
 #include "../include/terminal.h"
 
-char title[TITLE_SIZE];
+static char title[TITLE_SIZE];
 static char option[OPTION_SIZE];
 static void* parent_window = NULL;
 static int selected = 0; // selected option index
