@@ -24,17 +24,27 @@ void set_error_color(const char* color)
     strncpy(error_color, color, COLOR_SIZE);
 }
 
+static void puts_custom_col(const char* string, const char* color, const char* style)
+{
+    printf("%s%s%s%s\n", color, style, string, COLOR_RESET);
+}
+
 void puts_col(const char* string)
 {
-    printf("%s%s%s\n", primary_color, string, COLOR_RESET);
+    puts_custom_col(string, primary_color, "");
 }
 
 void puts_rev_col(const char* string)
 {
-    printf("%s%s%s%s\n", COLOR_REVERSE, primary_color, string, COLOR_RESET);
+    puts_custom_col(string, primary_color, COLOR_REVERSE);
 }
 
 void puts_err_col(const char* string)
 {
-    printf("%s%s%s\n", error_color, string, COLOR_RESET);
+    puts_custom_col(string, primary_color, error_color);
+}
+
+void puts_blink_col(const char* string)
+{
+    puts_custom_col(string, primary_color, COLOR_BLINK);   
 }
