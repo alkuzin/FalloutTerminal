@@ -28,3 +28,9 @@ To run terminal run this command:
 ```console
 clear && ./terminal
 ```
+## Issues
+> [!WARNING]
+> If your cursor disappeared run this command:
+```console
+printf "\e[?25h"
+```
