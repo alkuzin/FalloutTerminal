@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #include "../include/terminal.h"
 
@@ -25,6 +26,12 @@
 // Better to use enviroment variables in this case
 #define PASSWORD "12345"
 #define PASSWORD_SIZE 5
+#define PASSWORDS_COUNT 40
+#define SELECTED_PASSWORDS_COUNT 8
+
+#define SYMBOLS "!@#$?/^&*()_+=|,.{}[]-"
+#define STRING_SIZE 12
+#define STRING_ROWS 16
 
 extern char login_title[TITLE_SIZE];
 
@@ -37,5 +44,7 @@ void getinput(char* buffer);
 void lock_out_terminal(void);
 
 void set_login_title(char* new_title);
+
+int randint(int lower_range, int higher_range);
 
 #endif
