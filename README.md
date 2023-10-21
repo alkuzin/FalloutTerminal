@@ -6,12 +6,12 @@ Fallout Terminal written in C.
 > Project is still under development. Some bugs can occur.
 
 ## Failed login
-<img src="failed-login.gif">
+<img src="img/failed-login.gif">
 
 ## Success login
-<img src="success-login.gif">
+<img src="img/success-login.gif">
 <br>
-<img src="fallout-terminal.gif">
+<img src="img/fallout-terminal.gif">
 
 
 ## Project Tree:
