@@ -13,7 +13,6 @@ Fallout Terminal written in C.
 <br>
 <img src="img/fallout-terminal.gif">
 
-
 ## Project Tree:
 ```
 .
@@ -32,6 +31,11 @@ Fallout Terminal written in C.
 │   ├── terminal.c
 │   └── ui.c
 ```
+## Controls
+Press **[ tab ]** to return to previous window.
+
+Press **[ q ]** to exit.
+
 ## Installation
 First clone this repository:
 ```console
