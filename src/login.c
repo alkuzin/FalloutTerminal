@@ -15,12 +15,33 @@ static int attempts = MAX_ATTEMPTS;
 char login_title[TITLE_SIZE] = 
 "ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL\n";
 
+static char* memory_dump[STRING_ROWS * STRING_SIZE + 1] = 
+{
+"|?_}|[+=}|^!", "]+,,|[]+=||,", 
+"&*@_]*[]!$ .", "-,{, | ^=,{ ", 
+"&*_]/+|!{/?<", "-/^^{/^}!-^*", 
+"-*/|.||[.}=*", ">+.[(^(_,-^^", 
+"&*+}=?$+/.[<", ">.{.[//|]-+.", 
+"-*.[$[||/}()", "&+[&}/)[^-+*",
+")*=,,.|]/&//", "&^^+[/{[_--&",
+".*^+{_|([]+(", ">)}_[]]{_-^&", 
+".*]{}?$[] ]*", ")?{]+(&[+-^|", 
+"^*)^)(|[]+=.", ")[^]?^+](-^_", 
+".*{}[,|[.^)_", ">([]/=?]!-./", 
+"&*]^?{|=){|-", "..(+/.+_&-._", 
+"**[|)&$/}]_&", ".(_+{-[[}-._", 
+"[*,[.}|?]/{@", "_/)${,]!+-^&", 
+"$*]]].|![{^#", "*=[+(_]/]-^.", 
+"$*+&.[|[_[+.", "*? ^+[}{[-^/"
+};
+
 int login(void)
 {
-    int num = 32636;
     char password[INPUT_SIZE];
-    char failed_attempt[25 + INPUT_SIZE + 1] = " ";
-    
+    char failed_attempt[25 + INPUT_SIZE + 1];   
+    const int hexnumber = randint(32636, 65530);
+    int temp_hexnumber;
+
     while (attempts >= 0)
     {
         system("clear");
@@ -34,15 +55,17 @@ int login(void)
         }
         putchar('\n');
         putchar('\n');
-
         printf("%-64s\n\n", failed_attempt);
-        for(int i = 0; i < 16; i++)
+        
+        temp_hexnumber = hexnumber;
+        for(int i = 1; i < STRING_ROWS; i++)
         {
-            printf("0x%04x ............ 0x%04x ............ \n", num, num + 24);
-            num += 12;
+            printf("0x%04x %s 0x%04x %s \n", temp_hexnumber, memory_dump[2*(i-1)] , temp_hexnumber + 24, memory_dump[2*i-1]);
+            temp_hexnumber += STRING_SIZE;
         }
-        num = 32636;
-        printf("0x%04x ............ 0x%04x ......USER-$ > ", num, num + 24);
+        
+        temp_hexnumber = hexnumber;
+        printf("0x%04x .*]{}?$[] ]* 0x%04x -^{/)-USER-$ > ", temp_hexnumber, temp_hexnumber + 24);
         
         getinput(password);
         if ((strncmp(password, PASSWORD, PASSWORD_SIZE) == 0) && (strlen(password) == PASSWORD_SIZE))
@@ -91,4 +114,10 @@ void lock_out_terminal(void)
 void set_login_title(char* new_title)
 {
     strncpy(login_title, new_title, TITLE_SIZE);
+}
+
+int randint(int lower_range, int upper_range)
+{
+    srand(time(NULL));
+    return rand() % (upper_range - lower_range + 1) + lower_range;
 }
