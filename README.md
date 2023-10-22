@@ -16,8 +16,6 @@ Fallout Terminal written in C.
 ## Project Tree:
 ```
 .
-├── failed-login.gif
-├── fallout-terminal.gif
 ├── include
 │   ├── login.h
 │   ├── terminal.h
