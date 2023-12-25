@@ -24,7 +24,7 @@ void set_error_color(const char* color)
     strncpy(error_color, color, COLOR_SIZE);
 }
 
-static void puts_custom_col(const char* string, const char* color, const char* style)
+void puts_custom_col(const char* string, const char* color, const char* style)
 {
     printf("%s%s%s%s\n", color, style, string, COLOR_RESET);
 }

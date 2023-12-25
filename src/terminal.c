@@ -81,7 +81,7 @@ void select_option(option_t* options_list, const int size)
     system("clear");
 
     print_options(options_list, size);
-    while (ch = getch())
+    while ((ch = getch()))
     {
         if (ch == 'q')
         {
@@ -161,7 +161,7 @@ void print_content(option_t* option_list, const int size)
         puts_err_col("--UNKNOWN CONTENT TYPE--");
         break;
     }
-    while (ch = getch())
+    while ((ch = getch()))
     {
         if (ch == '\t')
         {
