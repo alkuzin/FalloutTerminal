@@ -1,30 +1,36 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Wno-implicit-function-declaration
 
-SRC_PATH=src/
+NAME=libfterm.a
+
+LIB_PATH=libfterm/
+
+TERMINAL_PATH=$(LIB_PATH)/terminal/
+LOGIN_PATH=$(LIB_PATH)/login/
+UI_PATH=$(LIB_PATH)/ui/
+
+OBJS = terminal.o login.o ui.o
+
+$(NAME): $(OBJS)
+	ar rcs $@ $^
+
+all: $(NAME)
 
 final: main.o terminal.o ui.o login.o
-	@echo "(*) Linking and producting the final application"
-	$(CC) $(CFLAGS) main.o terminal.o ui.o login.o -o terminal
+	$(CC) $(CFLAGS) $(OBJS) -o terminal
 	chmod +x terminal
-	@echo "[+] Complete successfully"
 
-main.o: $(SRC_PATH)main.c
-	@echo "(*) Compiling program file"
-	$(CC) $(CFLAGS) -c $(SRC_PATH)main.c
+terminal.o: $(TERMINAL_PATH)terminal.c
+	$(CC) $(CFLAGS) -c $(TERMINAL_PATH)terminal.c
 
-terminal.o: $(SRC_PATH)terminal.c
-	@echo "(*) Compiling terminal.c"
-	$(CC) $(CFLAGS) -c $(SRC_PATH)terminal.c
+ui.o: $(UI_PATH)ui.c
+	$(CC) $(CFLAGS) -c $(UI_PATH)ui.c
 
-ui.o: $(SRC_PATH)ui.c
-	@echo "(*) Compiling ui.c"
-	$(CC) $(CFLAGS) -c $(SRC_PATH)ui.c
-
-login.o: $(SRC_PATH)login.c
-	@echo "(*) Compiling login.c"
-	$(CC) $(CFLAGS) -c $(SRC_PATH)login.c
+login.o: $(LOGIN_PATH)login.c
+	$(CC) $(CFLAGS) -c $(LOGIN_PATH)login.c
 
 clean:
-	@echo "(*) Removing extra files"
 	rm main.o terminal.o ui.o login.o
+
+fclean:
+	rm $(NAME)
