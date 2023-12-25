@@ -23,7 +23,7 @@
 #define COLOR_GREEN     "\033[92m"
 #define COLOR_CYAN      "\033[96m"
   
-#define COLOR_BLINK "\033[5m"
+#define COLOR_BLINK     "\033[5m"
 #define COLOR_REVERSE   "\033[7m"
 #define COLOR_RESET     "\033[0m"
 
@@ -36,7 +36,7 @@ void set_primary_color(const char* color);
 void set_error_color(const char* color);
 
 // print custom colored text
-static void puts_custom_col(const char* string, const char* color, const char* style);
+void puts_custom_col(const char* string, const char* color, const char* style);
 
 // print prime colored text
 void puts_col(const char* string);

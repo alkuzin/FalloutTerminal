@@ -12,12 +12,7 @@
 #ifndef LOGIN_H
 #define LOGIN_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-#include "../include/terminal.h"
+#include "terminal.h"
 
 #define MAX_ATTEMPTS 5
 #define INPUT_SIZE 10
