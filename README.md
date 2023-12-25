@@ -15,24 +15,26 @@ Fallout Terminal written in C.
 
 ## Project Tree:
 ```
-.
 ├── include
 │   ├── login.h
 │   ├── terminal.h
 │   └── ui.h
 ├── LICENSE
-├── makefile
+├── Makefile
 ├── README.md
 ├── src
 │   ├── login.c
 │   ├── main.c
 │   ├── terminal.c
 │   └── ui.c
+
 ```
 ## Controls
 Press **[ tab ]** to return to previous window.
 
 Press **[ q ]** to exit.
+
+Press double **[ tab ]** to return to previous window from suboption.
 
 ## Installation
 First clone this repository:
