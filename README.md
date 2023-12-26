@@ -1,6 +1,8 @@
 # Fallout Terminal
 
-Fallout Terminal library written in C.
+Fallout Terminal library written in C. 
+
+(Fallout 4 terminal contents [here](https://fallout-archive.fandom.com/wiki/Fallout_4_terminals)).
 
 > [!WARNING]
 > Project is still under development. Some bugs can occur.
