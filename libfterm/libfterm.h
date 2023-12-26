@@ -1,14 +1,15 @@
-// =============================================================================
-//
-//    include/terminal.h	
-//
-//    By: alkuzin < >                                                     	
-//
-//    Updated: 20/10/2023 18:11:19                                             	
-//
-//                       Copyright "FalloutTerminal" (c), 2023.	
-//
-// =============================================================================
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                                            */
+/*   libfterm.h                                                               */
+/*                                                                            */
+/*   By: alkuzin <->                                                          */
+/*                                                                            */
+/*   Created: 2023/12/26 09:07:15 by alkuzin                                  */
+/*   Updated: 2023/12/26 10:29:13 by alkuzin                                  */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFTERM_H
 #define LIBFTERM_H
 
@@ -28,43 +29,12 @@
 #define CONTENT_SIZE 512
 #define DEFAULT_DELAY 50
 
-#define TEXT 0
-#define DIRECTORY 1
-#define ERROR 2
+extern int field_width;
 
-typedef struct
-{
-    char title[32];
-    int content_type;
-    void* content;
-}option_t;
-
-// listen keys
-int getch(void);
-
-void hide_cursor(void);
-
-void show_cursor(void);
-
-void set_title(const char* title);
-
-void set_parent_window(option_t* options_list);
-
-// set option content (text, list of options or error)
-void set_option_content(option_t* option, void* content);
-
-// set option content type (text, list of options or error)
-void set_option_content_type(option_t* option, int content_type);
-
-void print_options(const option_t* options_list, const int size);
-
-// interactive options selection
-void select_option(option_t* options_list, const int size);
-
-// print option's content
-void print_content(option_t* options_list, int size);
-
-// print text with time delay
-void slow_print(const char* text, int delay);
+enum { 
+    TEXT=0,
+    DIRECTORY=1,
+    ERROR=2
+};
 
 #endif /* LIBFTERM_H */
