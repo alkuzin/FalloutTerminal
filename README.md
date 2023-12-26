@@ -1,6 +1,6 @@
 # Fallout Terminal
 
-Fallout Terminal written in C.
+Fallout Terminal library written in C.
 
 > [!WARNING]
 > Project is still under development. Some bugs can occur.
@@ -13,22 +13,6 @@ Fallout Terminal written in C.
 <br>
 <img src="img/fallout-terminal.gif">
 
-## Project Tree:
-```
-├── include
-│   ├── login.h
-│   ├── terminal.h
-│   └── ui.h
-├── LICENSE
-├── Makefile
-├── README.md
-├── src
-│   ├── login.c
-│   ├── main.c
-│   ├── terminal.c
-│   └── ui.c
-
-```
 ## Controls
 Press **[ tab ]** to return to previous window.
 
@@ -43,9 +27,13 @@ git clone https://github.com/alkuzin/FalloutTerminal.git
 ```
 Then:
 ```console
-make && make clean
+make all && make clean
 ```
-To run terminal run this command:
+To see how this library works compile *libfterm.a* with *main.c*:
+```console
+gcc main.c libfterm.a -o terminal
+```
+And run this command:
 ```console
 clear && ./terminal
 ```
