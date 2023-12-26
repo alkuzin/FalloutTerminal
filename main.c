@@ -1,16 +1,16 @@
-// =============================================================================
-//
-//    src/main.c	
-//
-//    By: alkuzin < >                                                     	
-//
-//    Updated: 20/10/2023 21:30:00                                             	
-//
-//                       Copyright "FalloutTerminal" (c), 2023.	
-//
-// =============================================================================
-#include "../include/terminal.h"
-#include "../include/login.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                                            */
+/*   main.c                                                                   */
+/*                                                                            */
+/*   By: alkuzin <->                                                          */
+/*                                                                            */
+/*   Created: 2023/12/26 09:42:25 by alkuzin                                  */
+/*   Updated: 2023/12/26 10:25:09 by alkuzin                                  */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "libfterm/libfterm.h"
 
 int main(void)
 {
@@ -22,6 +22,7 @@ int main(void)
     set_primary_color(COLOR_WHITE);
     set_error_color(COLOR_RED);
     set_title(main_title);
+    set_field_width(64);
 
     // initialize login process
     if (login())
@@ -29,10 +30,10 @@ int main(void)
         hide_cursor();
         system("clear");
 
-        puts_col(login_title);
+        print_col(get_login_title());
         slow_print("\nLOGIN AS ADMINISTRATOR\n"
         "PASSWORD: * * * * *\n\nSTATUS: COMPLETE\n\n\n", DEFAULT_DELAY);
-        puts_blink_col("[press <enter> to continue]");
+        print_blink_col("[press <enter> to continue]");
 
         getchar();
     }
@@ -40,7 +41,7 @@ int main(void)
     {
         system("clear");
         lock_out_terminal();
-        printf("%s", COLOR_RESET);
+        puts("\033]0m");
     }
     system("clear");
 
