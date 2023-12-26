@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/25 21:22:31 by alkuzin                                  */
-/*   Updated: 2023/12/25 21:35:28 by alkuzin                                  */
+/*   Updated: 2023/12/26 09:36:24 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,5 @@ void print_err_col(const char *string)
 
 void print_blink_col(const char *string)
 {
-    print_custom_col(string, primary_color, COLOR_BLINK);   
+    print_custom_col(string, primary_color, STYLE_BLINK);   
 }
