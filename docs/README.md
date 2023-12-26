@@ -21,16 +21,16 @@ First clone this repository:
 ```console
 git clone https://github.com/alkuzin/FalloutTerminal.git
 ```
-Then move to *FalloutTerminal/* directory and run:
+Then move to __`FalloutTerminal/`__ directory and run:
 ```console
 make all && make clean
 ```
-Then include *libfterm.h* header file in your project.
+Then include [__`libfterm.h`__](../libfterm/libfterm.h) header file in your project.
 ```c
 #include "<path to your project>/libfterm/libfterm.h"
 /* project code here */
 ```
-Finaly compile your project, including *libfterm.a* file.
+Finaly compile your project, including __`libfterm.a`__ file.
 
 ## 3. Common components
 
@@ -166,7 +166,7 @@ extern void print_blink_col(const char *string);
 ```
 ## 7. Usage template
 
-To try this usage template compile *main.c* file, which is attached as an example to the library.
+To try this usage template compile [__`main.c`__](../main.c) file, which is attached as an example to the library.
 
 ```c
 // include header file
