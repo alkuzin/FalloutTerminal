@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/25 21:53:14 by alkuzin                                  */
-/*   Updated: 2023/12/25 22:05:40 by alkuzin                                  */
+/*   Updated: 2023/12/26 09:39:32 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 #define STRING_SIZE 12
 #define STRING_ROWS 16
 
-extern char login_title[TITLE_SIZE] = "ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL\n";
-
 // initialize user authorisation
 extern int login(void);
 
@@ -41,5 +39,9 @@ extern void getinput(char* buffer);
 extern void lock_out_terminal(void);
 
 extern void set_login_title(char* new_title);
+
+extern char *get_login_title(void);
+
+extern int randint(int lower_range, int upper_range);
 
 #endif /* LOGIN_H */

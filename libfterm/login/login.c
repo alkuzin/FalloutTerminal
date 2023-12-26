@@ -6,13 +6,14 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/25 21:54:58 by alkuzin                                  */
-/*   Updated: 2023/12/25 21:57:49 by alkuzin                                  */
+/*   Updated: 2023/12/26 09:56:46 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "login.h"
 
 static int attempts = MAX_ATTEMPTS;
+char login_title[TITLE_SIZE] = "ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL\n";
 
 static char *memory_dump[STRING_ROWS * STRING_SIZE + 1] = 
 {
@@ -44,7 +45,9 @@ int login(void)
     while (attempts >= 0)
     {
         system("clear");
-        printf("%s%sENTER PASSWORD NOW\n\n", primary_color, login_title);
+
+        printf("\033[%dm%sENTER PASSWORD NOW\n\n", primary_color, login_title);
+        // printf("%s%sENTER PASSWORD NOW\n\n", primary_color, login_title);
         printf("%d Attempt(s) left:", attempts);
 
         for (int i = 0; i < attempts; i++)
@@ -102,9 +105,8 @@ void lock_out_terminal(void)
     slow_print(
         "\n\n\n\n\n\t\t\t\t TERMINAL LOCKED\n"
         "\t\t\t\tPLEASE CONTACT AN\n"
-        "\t\t\t\t  ADMINISTRATOR", DEFAULT_DELAY
-    );
-    puts_blink_col("\n\n\n\t\t\t   [press <enter> to continue]\n\n\n\n\n\n\n\n");
+        "\t\t\t\t  ADMINISTRATOR", DEFAULT_DELAY);
+    print_blink_col("\n\n\n\t\t\t   [press <enter> to continue]\n\n\n\n\n\n\n\n");
     getchar();
     show_cursor();
     exit(EXIT_FAILURE);
@@ -115,7 +117,12 @@ void set_login_title(char* new_title)
     strncpy(login_title, new_title, TITLE_SIZE);
 }
 
-static int randint(int lower_range, int upper_range)
+char *get_login_title(void)
+{
+    return login_title;
+}
+
+int randint(int lower_range, int upper_range)
 {
     srand(time(NULL));
     return rand() % (upper_range - lower_range + 1) + lower_range;
