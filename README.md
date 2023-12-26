@@ -25,7 +25,7 @@ First clone this repository:
 ```console
 git clone https://github.com/alkuzin/FalloutTerminal.git
 ```
-Then move to FalloutTerminal/ directory and run:
+Then move to *FalloutTerminal/* directory and run:
 ```console
 make all && make clean
 ```
