@@ -16,10 +16,6 @@ $(NAME): $(OBJS)
 
 all: $(NAME)
 
-final: main.o terminal.o ui.o login.o
-	$(CC) $(CFLAGS) $(OBJS) -o terminal
-	chmod +x terminal
-
 terminal.o: $(TERMINAL_PATH)terminal.c
 	$(CC) $(CFLAGS) -c $(TERMINAL_PATH)terminal.c
 
@@ -30,7 +26,7 @@ login.o: $(LOGIN_PATH)login.c
 	$(CC) $(CFLAGS) -c $(LOGIN_PATH)login.c
 
 clean:
-	rm main.o terminal.o ui.o login.o
+	rm $(OBJS)
 
 fclean:
 	rm $(NAME)
