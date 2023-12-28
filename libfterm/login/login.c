@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/25 21:54:58 by alkuzin                                  */
-/*   Updated: 2023/12/28 12:50:26 by alkuzin                                  */
+/*   Updated: 2023/12/28 15:43:51 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ extern void login_success(const char *success_msg)
 {
 	hide_cursor();
     system("clear");
-
+    
     print_col(get_login_title());
 	slow_print(success_msg, DEFAULT_DELAY);
 
