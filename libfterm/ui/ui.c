@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/25 21:22:31 by alkuzin                                  */
-/*   Updated: 2023/12/28 12:51:18 by alkuzin                                  */
+/*   Updated: 2023/12/28 15:46:22 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int error_color;
 
 /* print custom colored text */
 static void print_custom_col(const char *string, int color, int style);
-
 
 void set_primary_color(int color)
 {
@@ -31,7 +30,9 @@ void set_error_color(int color)
 
 void print_col(const char *string)
 {
-    print_custom_col(string, primary_color, STYLE_RESET);
+    change_col(primary_color);
+    puts(string);
+    reset_color();
 }
 
 void print_rev_col(const char *string)
@@ -61,5 +62,7 @@ void reset_color(void)
 
 static void print_custom_col(const char *string, int color, int style)
 {
-    printf("\033[%dm\033[%dm%s\033[0m\n", color, style, string);
+    change_col(color);
+    printf("\e[%dm%s\n", style, string);
+    reset_color();
 }
