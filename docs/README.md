@@ -57,12 +57,13 @@ enum {
 Enumeration of colors and text styles (ANSI):
 ```c
 enum {
+    // colors
     COLOR_WHITE    = 97,
     COLOR_BLACK    = 30,
     COLOR_RED      = 31,
     COLOR_GREEN    = 92,
     COLOR_CYAN     = 96,
-
+    // text styles
     STYLE_BLINK    = 5,
     STYLE_REVERSE  = 7,
     STYLE_RESET    = 0
@@ -78,20 +79,17 @@ The login functions are responsible for the process of user's logging in:
 // return 1 when logging in is successful, 0 is logging in failed
 extern int login(void);
 
-// get string input from user
-extern void getinput(char* buffer);
+// successful user authorisation window
+extern void login_success(const char *success_msg);
 
-// lock out terminal in case of 5 failed attempts of logging in
-extern void lock_out_terminal(void);
+// failed user authorisation window
+extern void login_failure(const char *failure_msg);
 
-// set login custom title
+// set authorisation window title
 extern void set_login_title(char* new_title);
 
-// get login title
+// get authorisation window title
 extern char *get_login_title(void);
-
-// return pseudorandom integer from lower_range to upper_range
-extern int randint(int lower_range, int upper_range);
 ```
 
 > [!WARNING]
@@ -101,38 +99,29 @@ extern int randint(int lower_range, int upper_range);
 
 The terminal functions are responsible for the operation of the terminal after logging in:
 ```c
-// read a character input from the keyboard.
-extern int getch(void); 
+// initialize terminal
+extern void init_terminal(option_t *options_list, int size);
 
 // hide mouse cursor
-extern void hide_cursor(void); 
+extern void hide_cursor(void);
 
 // show mouse cursor
-extern void show_cursor(void); 
+extern void show_cursor(void);
 
-// set custom option title
-extern void set_title(const char *new_title); 
+// set terminal title
+extern void set_title(const char *new_title);
 
-// set parent window (for options which contains directory)
-extern void set_parent_window(option_t *options_list); 
+// set hightlighted area field width
+extern void set_field_width(int width);
 
-// set width of highlighted area field
-extern void set_field_width(int width); 
-
-// set option content (text, directory or error)
+// set option content (text, list of options or error)
 extern void set_option_content(option_t *option, void* content);
 
-// set option content type (text, directory or error)
+// set option content type (text, list of options or error)
 extern void set_option_content_type(option_t *option, int content_type);
-
-// display options list
-extern void print_options(const option_t *options_list, const int size);
 
 // interactive options selection
 extern void select_option(option_t *options_list, const int size);
-
-// print option's content
-extern void print_content(option_t *options_list, int size);
 
 // print text with time delay
 extern void slow_print(const char *text, int delay);
@@ -143,14 +132,11 @@ extern void slow_print(const char *text, int delay);
 The UI functions are responsible for the semblance of the user interface:
 
 ```c
-// set custom primary color
+// set terminal primary color
 extern void set_primary_color(int color);
 
-// set custom error messages color
+// set error messages color
 extern void set_error_color(int color);
-
-// print custom colored text
-extern void print_custom_col(const char *string, int color, int style);
 
 // print prime colored text
 extern void print_col(const char *string);
@@ -161,8 +147,14 @@ extern void print_rev_col(const char *string);
 // print colored error text
 extern void print_err_col(const char *string);
 
-// print blinking text
+// print colored blinking text
 extern void print_blink_col(const char *string);
+
+// change color (should be reset later by reset_color())
+extern void change_col(int color);
+
+// reset color selected by change_col()
+extern void reset_color(void);
 ```
 ## 7. Usage template
 
@@ -175,42 +167,27 @@ To try this usage template compile [__`main.c`__](../main.c) file, which is atta
 int main(void)
 {
     // set default settings
-    const char* main_title = "...";
+    const char *main_title = "...";
+    const char *success_msg = "...";
+    const char *failure_msg = "...";
+    int size = 3;
 
+    set_login_title("...");
     set_primary_color(COLOR_WHITE);
     set_error_color(COLOR_RED);
     set_title(main_title);
     set_field_width(64);
-
+    
     // initialize login process
     if (login())
-    {
-        hide_cursor();
-        system("clear");
-
-        print_col(get_login_title());
-        // print successful login message
-        slow_print("...", DEFAULT_DELAY);
-
-        // wait pressing key from user
-        print_blink_col("[press <enter> to continue]");
-        getchar();
-    }
+        login_success(success_msg);
     else
-    {
-        system("clear");
-        lock_out_terminal();
-
-        // reseting color
-        puts("\033]0m");
-    }
+        login_failure(failure_msg);
     system("clear");
 
     // set options
-    int size = 3;
     option_t option_list[size];
     option_t sub_option_list[2];
-
     
     option_list[0] = (option_t)
     {
@@ -249,11 +226,7 @@ int main(void)
     };
 
     // initializing terminal
-    slow_print(main_title, DEFAULT_DELAY);
-
-    set_parent_window(option_list);
-    select_option(option_list, size);
-    
+    init_terminal(options_list, size);
     return 0;
 }
 ```
