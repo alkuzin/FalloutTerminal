@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/26 09:42:25 by alkuzin                                  */
-/*   Updated: 2023/12/26 10:25:09 by alkuzin                                  */
+/*   Updated: 2023/12/28 12:46:34 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,34 @@
 int main(void)
 {
     // set default settings
-    const char* main_title = 
+    const char *main_title = 
     "==== Institute Central Network ====\n"
     "Advanced Systems Terminal 1A     \n\n";
+
+    set_login_title("ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL\n");
 
     set_primary_color(COLOR_WHITE);
     set_error_color(COLOR_RED);
     set_title(main_title);
     set_field_width(64);
-
+ 
+    const char *success_msg = "\nLOGIN AS ADMINISTRATOR\n"
+        "PASSWORD: * * * * *\n\nSTATUS: COMPLETE\n\n\n";
+    
+    const char *failure_msg = "\n\n\n\n\n\t\t\t\t TERMINAL LOCKED\n"
+        "\t\t\t\tPLEASE CONTACT AN\n"
+        "\t\t\t\t  ADMINISTRATOR";
+    
     // initialize login process
     if (login())
-    {
-        hide_cursor();
-        system("clear");
-
-        print_col(get_login_title());
-        slow_print("\nLOGIN AS ADMINISTRATOR\n"
-        "PASSWORD: * * * * *\n\nSTATUS: COMPLETE\n\n\n", DEFAULT_DELAY);
-        print_blink_col("[press <enter> to continue]");
-
-        getchar();
-    }
+        login_success(success_msg);
     else
-    {
-        system("clear");
-        lock_out_terminal();
-        puts("\033]0m");
-    }
+        login_failure(failure_msg);
     system("clear");
 
     // set options
     int size = 3;
-    option_t option_list[size];
+    option_t options_list[size];
     option_t opt_list_personal_notes[2];
 
     opt_list_personal_notes[0] = (option_t)
@@ -79,7 +74,7 @@ int main(void)
         .content_type=TEXT
     };
 
-    option_list[0] = (option_t)
+    options_list[0] = (option_t)
     {
         .title="View Access Logs",
         .content= 
@@ -94,7 +89,7 @@ int main(void)
         .content_type=TEXT
     };
 
-    option_list[1] = (option_t)
+    options_list[1] = (option_t)
     {
         .title="Incident Reports",
         .content=
@@ -107,7 +102,7 @@ int main(void)
         .content_type=TEXT
     };
 
-    option_list[2] = (option_t)
+    options_list[2] = (option_t)
     {
         .title="Personal Notes", 
         .content=&opt_list_personal_notes,
@@ -115,8 +110,6 @@ int main(void)
     };
 
     // initializing terminal
-    slow_print(main_title, DEFAULT_DELAY);
-    set_parent_window(option_list);
-    select_option(option_list, size);
+    init_terminal(options_list, size);
     return 0;
 }
