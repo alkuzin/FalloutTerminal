@@ -8,12 +8,12 @@ Fallout Terminal library written in C.
 > Project is still under development. Some bugs can occur.
 
 ## Failed login
-<img src="img/failed-login.gif">
+<img src="img/failed_login.gif">
 
 ## Success login
-<img src="img/success-login.gif">
+<img src="img/success_login.gif">
 <br>
-<img src="img/fallout-terminal.gif">
+<img src="img/terminal.gif">
 
 ## Controls
 Press **[ tab ]** to return to previous window.
