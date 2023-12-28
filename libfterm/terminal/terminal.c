@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/26 08:54:28 by alkuzin                                  */
-/*   Updated: 2023/12/28 12:48:14 by alkuzin                                  */
+/*   Updated: 2023/12/26 10:22:46 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 static char title[TITLE_SIZE];
 static char option[OPTION_SIZE];
-static void* parent_window = DEFAULT_PARENT_WINDOW;
-int field_width = DEFAULT_FIELD_WIDTH;
+static void* parent_window = NULL;
+int field_width = 64;
 
 // selected option index
 static int selected = 0;
 
-// listen keys from keyboard
-static int getch(void);
-
-/* set terminal parent window */
-static void set_parent_window(option_t* options_list);
-
-/* print option content */
-static void print_content(option_t* option_list, const int size);
-
-
-void init_terminal(option_t *options_list, int size)
+int getch(void) 
 {
-	slow_print(title, DEFAULT_DELAY);
-    set_parent_window(options_list);
-    select_option(options_list, size);
+    struct termios oldattr, newattr;
+    int ch;
+    
+    
+    tcgetattr(STDIN_FILENO, &oldattr);
+    newattr = oldattr;
+    newattr.c_lflag &= ~(ICANON | ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newattr);
+    
+    ch = getchar();
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);
+    
+    return ch;
 }
 
 void hide_cursor(void)
@@ -50,6 +50,11 @@ void show_cursor(void)
 void set_title(const char *new_title)
 {
     strncpy(title, new_title, TITLE_SIZE);
+}
+
+void set_parent_window(option_t* options_list)
+{
+    parent_window = options_list;
 }
 
 void set_field_width(int width)
@@ -150,40 +155,7 @@ void select_option(option_t* options_list, const int size)
     }
 }
 
-void slow_print(const char* text, int delay)
-{
-    int i;
-
-
-	i = -1;
-	change_col(primary_color);
-    while (text[++i] != '\0')
-    {   
-        putchar(text[i]);
-        fflush(stdout);
-        usleep(delay * 500);
-    }
-    reset_color();
-}
-
-static int getch(void) 
-{
-    struct termios oldattr, newattr;
-    int ch;
-    
-    
-    tcgetattr(STDIN_FILENO, &oldattr);
-    newattr = oldattr;
-    newattr.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newattr);
-    
-    ch = getchar();
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);
-    
-    return ch;
-}
-
-static void print_content(option_t* option_list, const int size)
+void print_content(option_t* option_list, const int size)
 {
     int ch;
     system("clear");
@@ -227,7 +199,15 @@ static void print_content(option_t* option_list, const int size)
     }
 }
 
-static void set_parent_window(option_t* options_list)
+void slow_print(const char* text, int delay)
 {
-    parent_window = options_list;
+    int i = -1;
+    printf("\033[%dm", primary_color);
+    while (text[++i] != '\0')
+    {   
+        putchar(text[i]);
+        fflush(stdout);
+        usleep(delay * 500);
+    }
+    puts("\033]0m");
 }
