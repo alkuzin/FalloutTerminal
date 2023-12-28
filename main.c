@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/26 09:42:25 by alkuzin                                  */
-/*   Updated: 2023/12/28 12:46:34 by alkuzin                                  */
+/*   Updated: 2023/12/28 15:14:23 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int main(void)
 
     set_login_title("ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL\n");
 
-    set_primary_color(COLOR_WHITE);
+    set_primary_color(COLOR_GREEN);
     set_error_color(COLOR_RED);
     set_title(main_title);
     set_field_width(64);
