@@ -21,7 +21,7 @@ int main(void)
 
     set_login_title("ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL\n");
 
-    set_primary_color(COLOR_GREEN);
+    set_primary_color(COLOR_CYAN);
     set_error_color(COLOR_RED);
     set_title(main_title);
     set_field_width(64);
