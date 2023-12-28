@@ -94,7 +94,12 @@ void print_options(const option_t* options_list, int size)
         if (i == selected)
             print_rev_col(option);
         else
-            print_col(option);
+        {
+            change_col(primary_color);
+            puts(option);
+            reset_color();
+        }
+            
     }
 }
 
