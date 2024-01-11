@@ -28,5 +28,5 @@ login.o: $(LOGIN_PATH)login.c
 clean:
 	rm $(OBJS)
 
-fclean:
+fclean: clean
 	rm $(NAME)
