@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/25 21:54:58 by alkuzin                                  */
-/*   Updated: 2023/12/28 15:43:51 by alkuzin                                  */
+/*   Updated: 2024/01/11 11:34:35 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void lock_out_terminal(const char *lock_out_msg);
 static int attempts = MAX_ATTEMPTS;
 
 char login_title[TITLE_SIZE]; 
+
+char password[PASSW_MAX_LEN + 1];
 
 static char *memory_dump[193] = 
 {
@@ -155,6 +157,7 @@ static int randint(int lower_range, int upper_range)
 
 static void show_attempts(char *failed_attempt)
 {
+	printf("DEBUG: '%s' len: %lu", password, strlen(password));
     printf("\033[%dm%sENTER PASSWORD NOW\n\n", primary_color, login_title);
     printf("%d Attempt(s) left:", attempts);
 
@@ -168,8 +171,34 @@ static void show_attempts(char *failed_attempt)
     printf("%-64s\n\n", failed_attempt);
 }
 
-static int is_correct(const char *password)
+static int is_correct(const char *passw)
 {
-	return ((strncmp(password, PASSWORD, PASSWORD_SIZE) == 0) && 
-			(strlen(password) == PASSWORD_SIZE));
+	return ((strncmp(passw, password, PASSW_MAX_LEN) == 0) && 
+			(strlen(passw) <= PASSW_MAX_LEN));
+}
+
+void get_password(void)
+{
+	FILE *fd;
+
+	
+	if((fd = fopen(".env", "r")) == NULL) {
+		puts("libfterm: error to get password (file is missing)");
+		exit(EXIT_FAILURE);
+	}
+
+	if((fgets(password, PASSW_MAX_LEN, fd) == NULL) || (password[0] == '\n')) {
+		puts("libfterm: password is empty");
+		exit(EXIT_FAILURE);
+	}
+	
+	/* removing the '\n' symbol */
+	password[strlen(password) - 1] = '\0';
+
+	if(strchr(password, ' ')) {
+		puts("libfterm: password contain spaces");
+		exit(EXIT_FAILURE);
+	}
+	
+	fclose(fd);
 }
