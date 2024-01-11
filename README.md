@@ -35,6 +35,13 @@ To see how this library works compile *libfterm.a* with *main.c*:
 ```console
 gcc main.c libfterm.a -o terminal
 ```
+
+Be sure that you added .env file for storing password. 
+(Password should contain up to 16 characters without spaces).
+```console
+echo "password" > .env
+```
+
 And run this command:
 ```console
 clear && ./terminal
