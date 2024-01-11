@@ -6,7 +6,7 @@
 /*   By: alkuzin <->                                                          */
 /*                                                                            */
 /*   Created: 2023/12/26 09:42:25 by alkuzin                                  */
-/*   Updated: 2023/12/28 15:14:23 by alkuzin                                  */
+/*   Updated: 2024/01/11 10:45:28 by alkuzin                                  */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int main(void)
     const char *main_title = 
     "==== Institute Central Network ====\n"
     "Advanced Systems Terminal 1A     \n\n";
+
+	get_password();
 
     set_login_title("ROBCO INDUSTRIES (TM) TERMLINK PROTOCOL\n");
 
