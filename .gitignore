@@ -1,0 +1,5 @@
+.vscode/
+libfterm.a
+terminal
+.env
+*.o
