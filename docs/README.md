@@ -32,6 +32,10 @@ Then include [__`libfterm.h`__](../libfterm/libfterm.h) header file in your proj
 ```
 Finaly compile your project, including __`libfterm.a`__ file.
 
+> [!WARNING]
+> Be sure that you added .env file for storing password. 
+> Password should contain up to 16 characters without spaces.
+
 ## 3. Common components
 
 The terminal contains several options. 
@@ -90,10 +94,9 @@ extern void set_login_title(char* new_title);
 
 // get authorisation window title
 extern char *get_login_title(void);
-```
 
-> [!WARNING]
->  Default password is using for tests, it is better to use enviroment variables in this case!
+extern void get_password(void);
+```
 
 ## 5. Terminal functions
 
@@ -171,6 +174,8 @@ int main(void)
     const char *success_msg = "...";
     const char *failure_msg = "...";
     int size = 3;
+	
+	get_password();
 
     set_login_title("...");
     set_primary_color(COLOR_WHITE);
